@@ -1,0 +1,12 @@
+set :stage, :production
+set :rails_env, :production
+set :branch, 'main'
+
+set :nginx_server_name, '<%= @hostname %>'
+set :nginx_use_ssl, false  # Certbot will enable SSL for us
+
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+
+server '<%= @server %>', user: fetch(:deploy_user), roles: %w{web app db}, primary: true
+
+set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
